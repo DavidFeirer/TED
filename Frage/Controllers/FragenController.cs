@@ -15,11 +15,13 @@ namespace FrageService.Controllers
     public class FragenController : ControllerBase
     {
         private readonly FrageContext _context;
+        private readonly HttpClient _httpClient;
 
         public FragenController(FrageContext context)
         {
             _context = context;
             InitializeInitialValues();
+            _httpClient = new HttpClient();
         }
 
         // GET: api/Fragen
@@ -52,37 +54,6 @@ namespace FrageService.Controllers
             return frage;
         }
 
-        // PUT: api/Fragen/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFrage(long id, Frage frage)
-        {
-            if (id != frage.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(frage).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FrageExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/Fragen
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -96,31 +67,6 @@ namespace FrageService.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetFrage", new { id = frage.Id }, frage);
-        }
-
-        // DELETE: api/Fragen/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFrage(long id)
-        {
-            if (_context.Fragen == null)
-            {
-                return NotFound();
-            }
-            var frage = await _context.Fragen.FindAsync(id);
-            if (frage == null)
-            {
-                return NotFound();
-            }
-
-            _context.Fragen.Remove(frage);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool FrageExists(long id)
-        {
-            return (_context.Fragen?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         private void InitializeInitialValues()

@@ -5,11 +5,13 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FragebogenService", "TED\FragebogenService.csproj", "{1353DD5B-B641-4460-89D8-F03523B7BDE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrageService", "Frage\FrageService.csproj", "{E8E47561-B8C6-487B-836C-613F39EC16D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrageService", "Frage\FrageService.csproj", "{E8E47561-B8C6-487B-836C-613F39EC16D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntwortService", "AntwortService\AntwortService.csproj", "{17F69AA1-77DB-493A-81B8-8865DD16592F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntwortService", "AntwortService\AntwortService.csproj", "{17F69AA1-77DB-493A-81B8-8865DD16592F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuswertungService", "AuswertungService\AuswertungService.csproj", "{3BE8A78E-D46B-44EE-BCBC-C096626FC366}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuswertungService", "AuswertungService\AuswertungService.csproj", "{3BE8A78E-D46B-44EE-BCBC-C096626FC366}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fragenevaluierung", "Fragenevaluierung\Fragenevaluierung.csproj", "{0523971C-0C9D-4FB6-B213-B5590FB8A5C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3BE8A78E-D46B-44EE-BCBC-C096626FC366}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BE8A78E-D46B-44EE-BCBC-C096626FC366}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BE8A78E-D46B-44EE-BCBC-C096626FC366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0523971C-0C9D-4FB6-B213-B5590FB8A5C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0523971C-0C9D-4FB6-B213-B5590FB8A5C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0523971C-0C9D-4FB6-B213-B5590FB8A5C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0523971C-0C9D-4FB6-B213-B5590FB8A5C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
