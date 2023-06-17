@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TED", "TED\TED.csproj", "{1353DD5B-B641-4460-89D8-F03523B7BDE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FragebogenService", "TED\FragebogenService.csproj", "{1353DD5B-B641-4460-89D8-F03523B7BDE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrageService", "Frage\FrageService.csproj", "{E8E47561-B8C6-487B-836C-613F39EC16D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntwortService", "AntwortService\AntwortService.csproj", "{17F69AA1-77DB-493A-81B8-8865DD16592F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuswertungService", "AuswertungService\AuswertungService.csproj", "{3BE8A78E-D46B-44EE-BCBC-C096626FC366}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{1353DD5B-B641-4460-89D8-F03523B7BDE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1353DD5B-B641-4460-89D8-F03523B7BDE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1353DD5B-B641-4460-89D8-F03523B7BDE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8E47561-B8C6-487B-836C-613F39EC16D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8E47561-B8C6-487B-836C-613F39EC16D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8E47561-B8C6-487B-836C-613F39EC16D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8E47561-B8C6-487B-836C-613F39EC16D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17F69AA1-77DB-493A-81B8-8865DD16592F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17F69AA1-77DB-493A-81B8-8865DD16592F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17F69AA1-77DB-493A-81B8-8865DD16592F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17F69AA1-77DB-493A-81B8-8865DD16592F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BE8A78E-D46B-44EE-BCBC-C096626FC366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BE8A78E-D46B-44EE-BCBC-C096626FC366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BE8A78E-D46B-44EE-BCBC-C096626FC366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BE8A78E-D46B-44EE-BCBC-C096626FC366}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

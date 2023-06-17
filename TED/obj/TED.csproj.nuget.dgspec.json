@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\dev\\git\\TED\\TED\\TED.csproj": {}
+    "C:\\Users\\dario\\Source\\Repos\\TED\\TED\\TED.csproj": {}
   },
   "projects": {
-    "C:\\dev\\git\\TED\\TED\\TED.csproj": {
+    "C:\\Users\\dario\\Source\\Repos\\TED\\TED\\TED.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dev\\git\\TED\\TED\\TED.csproj",
+        "projectUniqueName": "C:\\Users\\dario\\Source\\Repos\\TED\\TED\\TED.csproj",
         "projectName": "TED",
-        "projectPath": "C:\\dev\\git\\TED\\TED\\TED.csproj",
-        "packagesPath": "C:\\Users\\dfeir\\.nuget\\packages\\",
-        "outputPath": "C:\\dev\\git\\TED\\TED\\obj\\",
+        "projectPath": "C:\\Users\\dario\\Source\\Repos\\TED\\TED\\TED.csproj",
+        "packagesPath": "C:\\Users\\dario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dario\\Source\\Repos\\TED\\TED\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\dfeir\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,9 +44,53 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNet.WebApi.OData": {
+              "target": "Package",
+              "version": "[5.7.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[7.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.18, )"
+            },
+            "Microsoft.Extensions.ApiDescription.Server": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.7, )"
+            },
+            "Microsoft.OpenApi": {
+              "target": "Package",
+              "version": "[1.6.4, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.14, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.2.3, )"
+              "version": "[6.5.0, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[6.5.0, )"
             }
           },
           "imports": [
@@ -64,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
