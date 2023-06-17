@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "7oLD1r1ai9nu/DTWZa7AwoTnO9qtt1Ik8PcAIbrbl/s=",
-  "Source": "Frage",
-  "BasePath": "_content/Frage",
+  "Hash": "rBdmV20Eh0XZbd3uZLFGcNSZThCFhz+yO4d9wOuPS0w=",
+  "Source": "FrageService",
+  "BasePath": "_content/FrageService",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

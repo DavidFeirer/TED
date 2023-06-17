@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FrageService.Model;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace FrageService.Controllers
 {
@@ -23,6 +24,7 @@ namespace FrageService.Controllers
 
         // GET: api/Fragen
         [HttpGet]
+        [EnableQuery]
         public async Task<ActionResult<IEnumerable<Frage>>> GetFragen()
         {
             if (_context.Fragen == null)
@@ -125,15 +127,15 @@ namespace FrageService.Controllers
         {
             var initialFragen = new[]
             {
-            new Frage { Id = 1, Text = "Frage...?", FragebogenId = 1 },
-            new Frage { Id = 2, Text = "Frage...?", FragebogenId = 1 },
-            new Frage { Id = 3, Text = "Frage...?", FragebogenId = 1 },
-            new Frage { Id = 4, Text = "Frage...?", FragebogenId = 2 },
-            new Frage { Id = 5, Text = "Frage...?", FragebogenId = 2 },
-            new Frage { Id = 6, Text = "Frage...?", FragebogenId = 2 },
-            new Frage { Id = 7, Text = "Frage...?", FragebogenId = 3 },
-            new Frage { Id = 8, Text = "Frage...?", FragebogenId = 3 },
-            new Frage { Id = 9, Text = "Frage...?", FragebogenId = 3 }
+            new Frage { Id = 1, Text = "Wie könnten wir als Unternehmen unseren ökologischen Fußabdruck reduzieren?", FragebogenId = 1 },
+            new Frage { Id = 2, Text = "Welche Maßnahmen könnten ergriffen werden, um nachhaltige Produkte oder Dienstleistungen anzubieten?", FragebogenId = 1 },
+            new Frage { Id = 3, Text = "Wie könnten wir unsere Mitarbeiter motivieren, nachhaltige Praktiken am Arbeitsplatz umzusetzen?", FragebogenId = 1 },
+            new Frage { Id = 4, Text = "Was schätzen Sie am meisten an Ihrer derzeitigen Arbeitsumgebung?", FragebogenId = 2 },
+            new Frage { Id = 5, Text = "Welche Faktoren tragen Ihrer Meinung nach am meisten zur Arbeitszufriedenheit bei?", FragebogenId = 2 },
+            new Frage { Id = 6, Text = "Was könnte das Unternehmen tun, um das Arbeitsumfeld und das Wohlbefinden der Mitarbeiter zu verbessern?", FragebogenId = 2 },
+            new Frage { Id = 7, Text = "Was könnten wir verbessern, um die Kundenerfahrung bei der Nutzung unserer Produkte zu optimieren?", FragebogenId = 3 },
+            new Frage { Id = 8, Text = "Was ist aus Ihrer Sicht das herausragendste Merkmal unserer Markeleistungen?", FragebogenId = 3 },
+            new Frage { Id = 9, Text = "Wie könnten wir unsere Kundenkommunikation oder den Support weiter verbessern?", FragebogenId = 3 }
             };
 
             foreach (var frage in initialFragen)
