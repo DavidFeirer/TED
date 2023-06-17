@@ -18,6 +18,7 @@ namespace FrageService.Controllers
         public FragenController(FrageContext context)
         {
             _context = context;
+            InitializeInitialValues();
         }
 
         // GET: api/Fragen
@@ -118,6 +119,32 @@ namespace FrageService.Controllers
         private bool FrageExists(long id)
         {
             return (_context.Fragen?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private void InitializeInitialValues()
+        {
+            var initialFragen = new[]
+            {
+            new Frage { Id = 1, Text = "Frage...?", FragebogenId = 1 },
+            new Frage { Id = 2, Text = "Frage...?", FragebogenId = 1 },
+            new Frage { Id = 3, Text = "Frage...?", FragebogenId = 1 },
+            new Frage { Id = 4, Text = "Frage...?", FragebogenId = 2 },
+            new Frage { Id = 5, Text = "Frage...?", FragebogenId = 2 },
+            new Frage { Id = 6, Text = "Frage...?", FragebogenId = 2 },
+            new Frage { Id = 7, Text = "Frage...?", FragebogenId = 3 },
+            new Frage { Id = 8, Text = "Frage...?", FragebogenId = 3 },
+            new Frage { Id = 9, Text = "Frage...?", FragebogenId = 3 }
+            };
+
+            foreach (var frage in initialFragen)
+            {
+                if (_context.Fragen.Find(frage.Id) == null)
+                {
+                    _context.Fragen.Add(frage);
+                }
+            }
+
+            _context.SaveChanges();
         }
     }
 }

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http.OData.Query;
 using FragebogenService.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.EntityFrameworkCore;
 
 namespace FragebogenService.Controllers
@@ -18,10 +20,12 @@ namespace FragebogenService.Controllers
         public FragebogenController(FragebogenContext context)
         {
             _context = context;
+            InitializeInitialValues();
         }
 
         // GET: api/Fragebogens
         [HttpGet]
+        [EnableQuery]
         public async Task<ActionResult<IEnumerable<Fragebogen>>> GetFrageboegen()
         {
             if (_context.Frageboegen == null)
@@ -118,6 +122,26 @@ namespace FragebogenService.Controllers
         private bool FragebogenExists(long id)
         {
             return (_context.Frageboegen?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private void InitializeInitialValues()
+        {
+            var initialFragebogen = new[]
+            {
+            new Fragebogen { Id = 1, Name = "Fragebogen_1", Typ = "Nachhaltigkeit" },
+            new Fragebogen { Id = 2, Name = "Fragebogen_2", Typ = "Arbeitszufriedenheit" },
+            new Fragebogen { Id = 3, Name = "Fragebogen_3", Typ = "Kundenzufriedenheit" }
+            };
+
+            foreach (var fragebogen in initialFragebogen)
+            {
+                if (_context.Frageboegen.Find(fragebogen.Id) == null)
+                {
+                    _context.Frageboegen.Add(fragebogen);
+                }
+            }
+
+            _context.SaveChanges();
         }
     }
 }

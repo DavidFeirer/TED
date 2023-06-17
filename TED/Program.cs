@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using FragebogenService.Model;
+using Microsoft.AspNetCore.OData;
 
 internal class Program
 {
@@ -8,6 +9,8 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+
+        builder.Services.AddControllers().AddOData(opt => opt.Select().Filter().OrderBy());
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
