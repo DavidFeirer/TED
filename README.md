@@ -4,7 +4,7 @@
 | Konzept + CodeBasis erstellen  | Alle | 4 Stunden |
 | Aufgabe 1 - Mikro/Makro  | Selina Friesenbichler | |
 | Aufgabe 2 - Design  | Selina Friesenbichler | |
-| Aufgabe 3 - Implementierung I |  |  |
+| Aufgabe 3 - Implementierung I | David Feirer |  |
 | Aufgabe 4 - Implementierung II |  |  |
 | Aufgabe 5 - Implementierung III | Dario Wagner |  |
 | Aufgabe 6 - Qualität & Monitoring |   |  |
