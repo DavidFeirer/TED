@@ -27,7 +27,7 @@ builder.Services.AddSingleton<IConsulClient>(sp => new ConsulClient(config =>
 builder.Services.AddSingleton<IHostedService>(sp =>
 {
     var consulClient = sp.GetRequiredService<IConsulClient>();
-    var serviceName = "mein-microservice";
+    var serviceName = "fragenevaluierung";
     var serviceId = System.Guid.NewGuid().ToString();
     var servicePort = 8080;
 
