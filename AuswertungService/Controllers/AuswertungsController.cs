@@ -6,40 +6,40 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AuswertungService.Model;
+using AuswertungService.Services;
 
 namespace AuswertungService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/AuswertungsController")]
     [ApiController]
     public class AuswertungsController : ControllerBase
     {
-        private readonly AuswertungContext _context;
-
-        public AuswertungsController(AuswertungContext context)
+        private readonly AuswertungManagementService _auswertungManagementService;
+        public AuswertungsController(AuswertungManagementService auswertungManagementService)
         {
-            _context = context;
+            _auswertungManagementService = auswertungManagementService; 
         }
 
-        // GET: api/Auswertungs
+        // GET: api/AuswertungsController
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Auswertung>>> GetAuswertungen()
         {
-          if (_context.Auswertungen == null)
+          if (_auswertungManagementService.HoleAlleAuswertungen() == null)
           {
               return NotFound();
           }
-            return await _context.Auswertungen.ToListAsync();
+            return _auswertungManagementService.HoleAlleAuswertungen();
         }
 
-        // GET: api/Auswertungs/5
+        // GET: api/AuswertungsController/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Auswertung>> GetAuswertung(int id)
         {
-          if (_context.Auswertungen == null)
+          if (_auswertungManagementService.HoleAlleAuswertungen() == null)
           {
               return NotFound();
           }
-            var auswertung = await _context.Auswertungen.FindAsync(id);
+            var auswertung = _auswertungManagementService.HoleAuswertung(id);
 
             if (auswertung == null)
             {
@@ -48,76 +48,39 @@ namespace AuswertungService.Controllers
 
             return auswertung;
         }
-
-        // PUT: api/Auswertungs/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAuswertung(int id, Auswertung auswertung)
+        [HttpGet("queue")]
+        public async Task<ActionResult<List<String>>> GetAuswertung()
         {
-            if (id != auswertung.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(auswertung).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AuswertungExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return _auswertungManagementService.HoleAlleAntworten();            
         }
 
-        // POST: api/Auswertungs
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/AuswertungsController
         [HttpPost]
         public async Task<ActionResult<Auswertung>> PostAuswertung(Auswertung auswertung)
         {
-          if (_context.Auswertungen == null)
-          {
-              return Problem("Entity set 'AuswertungContext.Auswertungen'  is null.");
-          }
-            _context.Auswertungen.Add(auswertung);
-            await _context.SaveChangesAsync();
+            _auswertungManagementService.SpeichereAuswertung(auswertung);
 
             return CreatedAtAction("GetAuswertung", new { id = auswertung.Id }, auswertung);
         }
+        [HttpPost("queue")]
+        public async Task<ActionResult<Auswertung>> PostMessage(Object message)
+        {
+            _auswertungManagementService.SpeichereAuswertung(message.ToString());
+            return CreatedAtAction("GetAuswertung", message.ToString());
+        }
 
-        // DELETE: api/Auswertungs/5
+        // DELETE: api/AuswertungsController/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuswertung(int id)
         {
-            if (_context.Auswertungen == null)
-            {
-                return NotFound();
-            }
-            var auswertung = await _context.Auswertungen.FindAsync(id);
-            if (auswertung == null)
+            if (_auswertungManagementService.HoleAlleAuswertungen() == null)
             {
                 return NotFound();
             }
 
-            _context.Auswertungen.Remove(auswertung);
-            await _context.SaveChangesAsync();
+            _auswertungManagementService.LoescheAuswertung(id);
 
             return NoContent();
-        }
-
-        private bool AuswertungExists(int id)
-        {
-            return (_context.Auswertungen?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

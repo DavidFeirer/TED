@@ -1,4 +1,6 @@
-﻿namespace AuswertungService.Model
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace AuswertungService.Model
 {
     public class Auswertung
     {
@@ -6,7 +8,8 @@
         public String FragebogenTyp { get; set; }
         public long FrageId { get; set; }
         public String Frage { get; set; }
-        public List<String> Antworten { get; set; }
+        
+        public String Antworten { get; set; }
     }
 }
 

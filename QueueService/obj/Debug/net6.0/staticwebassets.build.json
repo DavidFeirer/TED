@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "3NT0ASM/whDdi2AcjwP//oi2tTvrXQClSZsvSzksQkg=",
+  "Source": "QueueService",
+  "BasePath": "_content/QueueService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

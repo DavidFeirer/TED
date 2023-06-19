@@ -1,5 +1,7 @@
 using AuswertungService.Model;
+using AuswertungService.Services;
 using Microsoft.EntityFrameworkCore;
+using AuswertungService.Model;
 
 namespace AuswertungService
 {
@@ -18,10 +20,12 @@ namespace AuswertungService
             builder.Services.AddDbContext<AuswertungContext>(opt =>
                           opt.UseInMemoryDatabase("AuswertungList"));
 
+            builder.Services.AddScoped<AuswertungManagementService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            //if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();

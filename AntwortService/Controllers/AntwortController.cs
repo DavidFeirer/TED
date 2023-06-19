@@ -6,40 +6,41 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AntwortService.Model;
+using AntwortService.Services;
 
 namespace AntwortService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/AntwortController")]
     [ApiController]
     public class AntwortController : ControllerBase
     {
-        private readonly AntwortContext _context;
+        private readonly AntwortManagementService _antwortManagementService;
 
-        public AntwortController(AntwortContext context)
+        public AntwortController(AntwortManagementService antwortManagementService)
         {
-            _context = context;
+            _antwortManagementService = antwortManagementService;
         }
 
         // GET: api/Antworts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Antwort>>> GetAntworten()
         {
-          if (_context.Antworten == null)
-          {
-              return NotFound();
-          }
-            return await _context.Antworten.ToListAsync();
+            if (_antwortManagementService.HoleAlleAntworten() == null)
+            {
+                return NotFound();
+            }
+            return _antwortManagementService.HoleAlleAntworten();
         }
 
         // GET: api/Antworts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Antwort>> GetAntwort(int id)
         {
-          if (_context.Antworten == null)
-          {
-              return NotFound();
-          }
-            var antwort = await _context.Antworten.FindAsync(id);
+            if (_antwortManagementService.HoleAlleAntworten() == null)
+            {
+                return NotFound();
+            }
+            var antwort = _antwortManagementService.HoleAntwort(id);
 
             if (antwort == null)
             {
@@ -49,48 +50,15 @@ namespace AntwortService.Controllers
             return antwort;
         }
 
-        // PUT: api/Antworts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAntwort(int id, Antwort antwort)
-        {
-            if (id != antwort.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(antwort).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AntwortExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/Antworts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Antwort>> PostAntwort(Antwort antwort)
         {
-          if (_context.Antworten == null)
-          {
-              return Problem("Entity set 'AntwortContext.Antworten'  is null.");
-          }
-            _context.Antworten.Add(antwort);
-            await _context.SaveChangesAsync();
+            if (_antwortManagementService.HoleAlleAntworten() == null)
+            {
+                return Problem("Entity set 'AntwortContext.Antworten'  is null.");
+            }
+            _antwortManagementService.SpeichereAntwort(antwort);
 
             return CreatedAtAction("GetAntwort", new { id = antwort.Id }, antwort);
         }
@@ -99,25 +67,18 @@ namespace AntwortService.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAntwort(int id)
         {
-            if (_context.Antworten == null)
+            if (_antwortManagementService.HoleAlleAntworten() == null)
             {
                 return NotFound();
             }
-            var antwort = await _context.Antworten.FindAsync(id);
-            if (antwort == null)
-            {
-                return NotFound();
-            }
-
-            _context.Antworten.Remove(antwort);
-            await _context.SaveChangesAsync();
+            _antwortManagementService.LoescheAntwort(id);
 
             return NoContent();
         }
 
         private bool AntwortExists(int id)
         {
-            return (_context.Antworten?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_antwortManagementService.HoleAlleAntworten()?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
