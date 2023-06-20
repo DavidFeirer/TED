@@ -1,6 +1,7 @@
 using FrageService.Model;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
+using Consul;
 
 namespace FrageService
 {
@@ -19,6 +20,11 @@ namespace FrageService
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<FrageContext>(opt =>
                            opt.UseInMemoryDatabase("FrageList"));
+
+            builder.Services.AddSingleton<IConsulClient>(sp => new ConsulClient(config =>
+            {
+                config.Address = new Uri("http://localhost:8500"); // Adresse des lokalen Consul-Agents
+            }));
 
             var app = builder.Build();
 

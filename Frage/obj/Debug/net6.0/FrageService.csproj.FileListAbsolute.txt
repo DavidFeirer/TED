@@ -258,3 +258,4 @@ C:\dev\git\TED\Frage\obj\Debug\net6.0\refint\FrageService.dll
 C:\dev\git\TED\Frage\obj\Debug\net6.0\FrageService.pdb
 C:\dev\git\TED\Frage\obj\Debug\net6.0\FrageService.genruntimeconfig.cache
 C:\dev\git\TED\Frage\obj\Debug\net6.0\ref\FrageService.dll
+C:\dev\git\TED\Frage\bin\Debug\net6.0\Consul.dll

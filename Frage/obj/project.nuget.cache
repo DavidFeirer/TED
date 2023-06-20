@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "cBSNu2a9CDZqGgrvIJka2KSuspnPCwv5q4sxWncc+MEInG3gXKBxxUwbyHyQB9aef4fakp7GvR2KxW6q6KF3aw==",
+  "dgSpecHash": "MYHWF/ReA4nXqMVPizi7Y/jdBpTd6+FNn2TcMEBZF7jCyvsVSCpMdPj//TInGBsgEYS78r/oZN0zLtPynHZKOg==",
   "success": true,
   "projectFilePath": "C:\\dev\\git\\TED\\Frage\\FrageService.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\dfeir\\.nuget\\packages\\consul\\1.6.10.9\\consul.1.6.10.9.nupkg.sha512",
     "C:\\Users\\dfeir\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\dfeir\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\dfeir\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",
@@ -72,7 +73,7 @@
     "C:\\Users\\dfeir\\.nuget\\packages\\microsoft.codeanalysis.razor\\6.0.0\\microsoft.codeanalysis.razor.6.0.0.nupkg.sha512",
     "C:\\Users\\dfeir\\.nuget\\packages\\microsoft.codeanalysis.scripting.common\\4.0.0\\microsoft.codeanalysis.scripting.common.4.0.0.nupkg.sha512",
     "C:\\Users\\dfeir\\.nuget\\packages\\microsoft.codeanalysis.workspaces.common\\4.0.0\\microsoft.codeanalysis.workspaces.common.4.0.0.nupkg.sha512",
-    "C:\\Users\\dfeir\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\dfeir\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\dfeir\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\dfeir\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\dfeir\\.nuget\\packages\\microsoft.diasymreader\\1.3.0\\microsoft.diasymreader.1.3.0.nupkg.sha512",

@@ -5,22 +5,30 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json")
+    .AddEnvironmentVariables()
+    .Build();
+
+
+var servicePort = Environment.GetEnvironmentVariable("SERVICE_PORT");
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICheckFrage, CheckFrage>();
 
-// Registrierung des Consul-Clients als Singleton
+
 builder.Services.AddSingleton<IConsulClient>(sp => new ConsulClient(config =>
 {
-    config.Address = new Uri("http://localhost:8500"); // Adresse des lokalen Consul-Agents
+    config.Address = new Uri("http://localhost:8500");
 }));
 
 // Registrierung des Microservices bei Consul
@@ -29,14 +37,12 @@ builder.Services.AddSingleton<IHostedService>(sp =>
     var consulClient = sp.GetRequiredService<IConsulClient>();
     var serviceName = "fragenevaluierung";
     var serviceId = System.Guid.NewGuid().ToString();
-    var servicePort = 8080;
 
-    // Metadaten für den Microservice
     var registration = new AgentServiceRegistration
     {
         ID = serviceId,
         Name = serviceName,
-        Port = servicePort,
+        Port = int.Parse(servicePort),
         Tags = new[] { "tag1", "tag2" }
     };
 

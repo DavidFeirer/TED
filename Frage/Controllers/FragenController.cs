@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FrageService.Model;
 using Microsoft.AspNetCore.OData.Query;
+using Consul;
+using System.Net;
 
 namespace FrageService.Controllers
 {
@@ -16,12 +18,16 @@ namespace FrageService.Controllers
     {
         private readonly FrageContext _context;
         private readonly HttpClient _httpClient;
+        private readonly IConsulClient _consulClient;
 
-        public FragenController(FrageContext context)
+        private readonly string serviceName = "fragenevaluierung";
+
+        public FragenController(FrageContext context, IConsulClient consulClient)
         {
             _context = context;
             InitializeInitialValues();
             _httpClient = new HttpClient();
+            _consulClient = consulClient;
         }
 
         // GET: api/Fragen
@@ -61,13 +67,42 @@ namespace FrageService.Controllers
         {
             if (_context.Fragen == null)
             {
-                return Problem("Entity set 'FrageContext.Fragen'  is null.");
+                return Problem("Entity set 'FrageContext.Fragen' is null.");
             }
+
+            try
+            {
+                var services = await _consulClient.Catalog.Service(serviceName);
+                var instances = services.Response;
+                var instance = instances.FirstOrDefault();
+
+                if (instance != null)
+                {
+                    string fragenevaluierungUrl = $"http://{instance.ServiceAddress}:{instance.ServicePort}/api/evaluierung";
+                    Console.WriteLine(fragenevaluierungUrl);
+                    using (var httpClient = new HttpClient())
+                    {
+                        var response = await httpClient.PostAsJsonAsync(fragenevaluierungUrl, frage.Text);
+                        response.EnsureSuccessStatusCode();
+                        Console.WriteLine(response);
+                    }
+                }
+                else
+                {
+                    return Problem("Es konnte keine Instanz des Fragenevaluierungsservice gefunden werden.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Problem("Ein Fehler ist beim Aufruf des Fragenevaluierungsservice aufgetreten.");
+            }
+
             _context.Fragen.Add(frage);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetFrage", new { id = frage.Id }, frage);
         }
+
 
         private void InitializeInitialValues()
         {
