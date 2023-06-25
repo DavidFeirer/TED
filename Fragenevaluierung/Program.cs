@@ -25,6 +25,12 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddScoped<ICheckFrage, CheckFrage>();
 
+builder.Services.AddLogging(builder =>
+{
+    builder.AddConsole();
+    builder.AddDebug();
+});
+
 
 builder.Services.AddSingleton<IConsulClient>(sp => new ConsulClient(config =>
 {

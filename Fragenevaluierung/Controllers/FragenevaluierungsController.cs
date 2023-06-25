@@ -10,15 +10,18 @@ namespace Fragenevaluierung.Controllers
     {
 
         private ICheckFrage _checkFrage;
+        private readonly ILogger<FragenevaluierungsController> _logger;
 
-        public FragenevaluierungsController(ICheckFrage checkFrage)
+        public FragenevaluierungsController(ICheckFrage checkFrage, ILogger<FragenevaluierungsController> logger)
         {
             _checkFrage = checkFrage;
+            _logger = logger;
         }
 
         [HttpPost]
         public ActionResult<bool> EvaluiereFrage([FromBody] string frage)
         {
+            _logger.LogInformation("New Request to validate frage: {}", frage);
             return _checkFrage.isValid(frage);
         }
     }
