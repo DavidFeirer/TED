@@ -2,6 +2,7 @@ using FrageService.Model;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Consul;
+using FrageService.Services;
 
 namespace FrageService
 {
@@ -11,11 +12,10 @@ namespace FrageService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
 
             builder.Services.AddControllers();
             builder.Services.AddControllers().AddOData(opt => opt.Select().Filter().OrderBy());
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<FrageContext>(opt =>
@@ -23,12 +23,20 @@ namespace FrageService
 
             builder.Services.AddSingleton<IConsulClient>(sp => new ConsulClient(config =>
             {
-                config.Address = new Uri("http://localhost:8500"); // Adresse des lokalen Consul-Agents
+                config.Address = new Uri("http://localhost:8500");
             }));
+
+            builder.Services.AddScoped<HttpClient>();
+            builder.Services.AddScoped<IEvFrageService, EvFrageService>();
+
+            builder.Services.AddLogging(builder =>
+            {
+                builder.AddConsole();
+                builder.AddDebug();
+            });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             //if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

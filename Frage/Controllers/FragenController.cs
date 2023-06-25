@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FrageService.Model;
 using Microsoft.AspNetCore.OData.Query;
 using Consul;
 using System.Net;
+using FrageService.Services;
 
 namespace FrageService.Controllers
 {
@@ -17,20 +13,18 @@ namespace FrageService.Controllers
     public class FragenController : ControllerBase
     {
         private readonly FrageContext _context;
-        private readonly HttpClient _httpClient;
-        private readonly IConsulClient _consulClient;
+        private readonly ILogger<FragenController> _logger;
+        private readonly IEvFrageService _evFrageService;
 
-        private readonly string serviceName = "fragenevaluierung";
 
-        public FragenController(FrageContext context, IConsulClient consulClient)
+        public FragenController(FrageContext context, ILogger<FragenController> logger, IEvFrageService evFrageService)
         {
             _context = context;
+            _logger = logger;
+            _evFrageService = evFrageService;
             InitializeInitialValues();
-            _httpClient = new HttpClient();
-            _consulClient = consulClient;
         }
 
-        // GET: api/Fragen
         [HttpGet]
         [EnableQuery]
         public async Task<ActionResult<IEnumerable<Frage>>> GetFragen()
@@ -42,7 +36,6 @@ namespace FrageService.Controllers
             return await _context.Fragen.ToListAsync();
         }
 
-        // GET: api/Fragen/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Frage>> GetFrage(long id)
         {
@@ -60,47 +53,29 @@ namespace FrageService.Controllers
             return frage;
         }
 
-        // POST: api/Fragen
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
         [HttpPost]
         public async Task<ActionResult<Frage>> PostFrage(Frage frage)
         {
+            _logger.LogInformation("Trying to post frage");
             if (_context.Fragen == null)
             {
                 return Problem("Entity set 'FrageContext.Fragen' is null.");
             }
 
-            try
+            if (frage.Text != null && await _evFrageService.isValid(frage.Text))
             {
-                var services = await _consulClient.Catalog.Service(serviceName);
-                var instances = services.Response;
-                var instance = instances.FirstOrDefault();
+                _logger.LogInformation("Frage is valid trying to save");
+                _context.Fragen.Add(frage);
+                await _context.SaveChangesAsync();
 
-                if (instance != null)
-                {
-                    string fragenevaluierungUrl = $"http://{instance.ServiceAddress}:{instance.ServicePort}/api/evaluierung";
-                    Console.WriteLine(fragenevaluierungUrl);
-                    using (var httpClient = new HttpClient())
-                    {
-                        var response = await httpClient.PostAsJsonAsync(fragenevaluierungUrl, frage.Text);
-                        response.EnsureSuccessStatusCode();
-                        Console.WriteLine(response);
-                    }
-                }
-                else
-                {
-                    return Problem("Es konnte keine Instanz des Fragenevaluierungsservice gefunden werden.");
-                }
+                return CreatedAtAction("GetFrage", new { id = frage.Id }, frage);
             }
-            catch (Exception ex)
+            else
             {
-                return Problem("Ein Fehler ist beim Aufruf des Fragenevaluierungsservice aufgetreten.");
+                return Problem("Frage is not valid");
             }
 
-            _context.Fragen.Add(frage);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetFrage", new { id = frage.Id }, frage);
         }
 
 
