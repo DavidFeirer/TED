@@ -1,4 +1,4 @@
-# Verwenden des ASP.NET Core SDK-Images für den Build-Prozess
+# Verwenden des ASP.NET Core SDK-Images fÃ¼r den Build-Prozess
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 
@@ -9,17 +9,17 @@ COPY . .
 RUN dotnet restore
 RUN dotnet build --configuration Release --no-restore
 
-# Veröffentlichen des Projekts
+# VerÃ¶ffentlichen des Projekts
 RUN dotnet publish --configuration Release --output /app
 
-# Verwenden des ASP.NET Core Runtime-Images für die finale Veröffentlichung
+# Verwenden des ASP.NET Core Runtime-Images fÃ¼r die finale VerÃ¶ffentlichung
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 WORKDIR /app
 COPY --from=build /app .
 
-# Setzen des Port, den der Container öffentlich freigeben soll
+# Setzen des Port, den der Container Ã¶ffentlich freigeben soll
 ENV ASPNETCORE_URLS=http://localhost:5001
 EXPOSE 5001
 
-# Ausführen der Anwendung
+# AusfÃ¼hren der Anwendung
 ENTRYPOINT ["dotnet", "Fragenevaluierung.dll"]

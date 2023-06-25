@@ -21,7 +21,7 @@ var servicePort = Environment.GetEnvironmentVariable("SERVICE_PORT");
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICheckFrage, CheckFrage>();
 
@@ -42,8 +42,8 @@ builder.Services.AddSingleton<IHostedService>(sp =>
     {
         ID = serviceId,
         Name = serviceName,
-        Port = int.Parse(servicePort),
-        Tags = new[] { "tag1", "tag2" }
+        Port = int.Parse(servicePort ?? "5001"),
+        Tags = new[] { "boolean", "post" }
     };
 
     return new ConsulHostedService(registration, consulClient);
@@ -54,8 +54,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    //app.UseSwagger();
+    //app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

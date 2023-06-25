@@ -15,12 +15,26 @@ namespace Fragenevaluierung.Service
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await _consulClient.Agent.ServiceRegister(_registration, cancellationToken);
+            try
+            {
+                await _consulClient.Agent.ServiceRegister(_registration, cancellationToken);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("could not reach Consul-agent");
+            }
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            await _consulClient.Agent.ServiceDeregister(_registration.ID, cancellationToken);
+            try
+            {
+                await _consulClient.Agent.ServiceDeregister(_registration.ID, cancellationToken);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("could not reach Consul-agent");
+            }
         }
     }
 }
