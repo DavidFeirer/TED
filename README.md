@@ -12,3 +12,12 @@
 | Aufgabe 8 - Präsi | Alle |  |
 | Aufgabe 9 - Funktionstüchtiges Projekt | Alle |  |
 | Aufgabe 10 - Zusatzaufgabe |  |  |
+
+### Aufgabe 3
+* Consul Agenten Starten
+    * ```consul agent --dev```
+* Fragenevaluierungsservice starten
+    * ```dotnet run --launch-profile fragenevaluierung-1```
+    * ```dotnet run --launch-profile fragenevaluierung-2```
+    * ```dotnet run --launch-profile fragenevaluierung-3```
+* Fragenservice starten
