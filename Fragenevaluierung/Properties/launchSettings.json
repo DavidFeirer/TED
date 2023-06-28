@@ -2,7 +2,7 @@
     "$schema": "https://json.schemastore.org/launchsettings.json",
 
     "profiles": {
-        "fragenevaluierung-1": {
+        "Fragenevaluierung-1": {
             "commandName": "Project",
             "launchBrowser": false,
             "applicationUrl": "http://localhost:5001",
@@ -11,7 +11,7 @@
                 "SERVICE_PORT": "5001"
             }
         },
-        "fragenevaluierung-2": {
+        "Fragenevaluierung-2": {
             "commandName": "Project",
             "launchBrowser": false,
             "applicationUrl": "http://localhost:5002",
@@ -20,7 +20,7 @@
                 "SERVICE_PORT": "5002"
             }
         },
-        "fragenevaluierung-3": {
+        "Fragenevaluierung-3": {
             "commandName": "Project",
             "launchBrowser": false,
             "applicationUrl": "http://localhost:5003",
