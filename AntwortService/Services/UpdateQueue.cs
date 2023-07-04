@@ -1,24 +1,39 @@
 ﻿using AntwortService.Model;
 using Newtonsoft.Json;
 using System.Text;
+using RabbitMQ.Client;
+using System.Threading.Channels;
+using System.Net.NetworkInformation;
 
 namespace AntwortService.Services
 {
     public class UpdateQueue
     {
-        private readonly HttpClient _httpClient;
-        private readonly string _queueServiceUrl; // Die URL des Queue-Service
+        readonly ConnectionFactory _factory = new ConnectionFactory { HostName = "localhost" };
 
-        public UpdateQueue(string queueServiceUrl)
+        public void PostToQueue(Antwort antwort)
         {
-            _httpClient = new HttpClient();
-            this._queueServiceUrl = queueServiceUrl;
+            using var connection = _factory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            channel.ExchangeDeclare(exchange: "antworten", type: ExchangeType.Fanout);
+
+            var antwortText = antwort.Text;
+            var body = Encoding.UTF8.GetBytes(antwortText);
+            channel.BasicPublish(exchange: "antworten",
+                                 routingKey: string.Empty,
+                                 basicProperties: null,
+                                 body: PrepareQueueBody(antwort));
+
+
+            Console.WriteLine($" [x] Sent {antwortText}");
         }
 
-        public async void PostToQueue(Antwort antwort)
+        public byte[] PrepareQueueBody(Antwort antwort)
         {
-            var content = new StringContent(JsonConvert.SerializeObject(antwort.Text), Encoding.UTF8, "application/json");
-            await _httpClient.PostAsync(_queueServiceUrl, content);
+            var antwortText = JsonConvert.SerializeObject(antwort);
+            var body = Encoding.UTF8.GetBytes(antwortText);
+            return body;
         }
     }
 }

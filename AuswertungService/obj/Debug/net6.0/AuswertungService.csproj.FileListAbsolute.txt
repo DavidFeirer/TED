@@ -253,3 +253,5 @@ C:\Users\dario\source\repos\TED\AuswertungService\obj\Debug\net6.0\refint\Auswer
 C:\Users\dario\source\repos\TED\AuswertungService\obj\Debug\net6.0\AuswertungService.pdb
 C:\Users\dario\source\repos\TED\AuswertungService\obj\Debug\net6.0\AuswertungService.genruntimeconfig.cache
 C:\Users\dario\source\repos\TED\AuswertungService\obj\Debug\net6.0\ref\AuswertungService.dll
+C:\Users\dario\source\repos\TED\AuswertungService\bin\Debug\net6.0\RabbitMQ.Client.dll
+C:\Users\dario\source\repos\TED\AuswertungService\bin\Debug\net6.0\System.Threading.Channels.dll

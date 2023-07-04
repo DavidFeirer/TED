@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AntwortService.Model;
 using AuswertungService.Model;
 using AuswertungService.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AuswertungService.Controllers
 {
@@ -14,73 +9,93 @@ namespace AuswertungService.Controllers
     [ApiController]
     public class AuswertungsController : ControllerBase
     {
-        private readonly AuswertungManagementService _auswertungManagementService;
-        public AuswertungsController(AuswertungManagementService auswertungManagementService)
+        private readonly IServiceProvider _serviceProvider;
+        public AuswertungsController(IServiceProvider serviceProvider)
         {
-            _auswertungManagementService = auswertungManagementService; 
+            _serviceProvider = serviceProvider;
         }
 
         // GET: api/AuswertungsController
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Auswertung>>> GetAuswertungen()
         {
-          if (_auswertungManagementService.HoleAlleAuswertungen() == null)
-          {
-              return NotFound();
+          using(var scope = _serviceProvider.CreateScope())
+            {
+              var auswertungManagementService = scope.ServiceProvider.GetRequiredService<IAuswertungManagementService>();
+              if (auswertungManagementService.HoleAlleAuswertungen() == null)
+              {
+                  return NotFound();
+              }
+              return auswertungManagementService.HoleAlleAuswertungen();
           }
-            return _auswertungManagementService.HoleAlleAuswertungen();
+        }
+        
+        [HttpGet("antworten")]
+        public async Task<ActionResult<IEnumerable<String>>> GetAntworten()
+        {
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var auswertungManagementService = scope.ServiceProvider.GetRequiredService<IAuswertungManagementService>();
+                if (auswertungManagementService.HoleAlleAntworten() == null)
+                {
+                    return NotFound();
+                }
+                return auswertungManagementService.HoleAlleAntworten();
+            }
         }
 
         // GET: api/AuswertungsController/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Auswertung>> GetAuswertung(int id)
         {
-          if (_auswertungManagementService.HoleAlleAuswertungen() == null)
-          {
-              return NotFound();
-          }
-            var auswertung = _auswertungManagementService.HoleAuswertung(id);
-
-            if (auswertung == null)
+            using (var scope = _serviceProvider.CreateScope())
             {
-                return NotFound();
+                var auswertungManagementService = scope.ServiceProvider.GetRequiredService<IAuswertungManagementService>();
+                if (auswertungManagementService.HoleAlleAuswertungen() == null)
+                {
+                    return NotFound();
+                }
+                var auswertung = auswertungManagementService.HoleAuswertung(id);
+
+                if (auswertung == null)
+                {
+                    return NotFound();
+                }
+
+                return auswertung;
             }
-
-            return auswertung;
         }
-        [HttpGet("queue")]
-        public async Task<ActionResult<List<String>>> GetAuswertung()
-        {
-            return _auswertungManagementService.HoleAlleAntworten();            
-        }
-
+        
         // POST: api/AuswertungsController
         [HttpPost]
         public async Task<ActionResult<Auswertung>> PostAuswertung(Auswertung auswertung)
         {
-            _auswertungManagementService.SpeichereAuswertung(auswertung);
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var auswertungManagementService = scope.ServiceProvider.GetRequiredService<IAuswertungManagementService>();
+                auswertungManagementService.SpeichereAuswertung(auswertung);
 
-            return CreatedAtAction("GetAuswertung", new { id = auswertung.Id }, auswertung);
-        }
-        [HttpPost("queue")]
-        public async Task<ActionResult<Auswertung>> PostMessage(Object message)
-        {
-            _auswertungManagementService.SpeichereAuswertung(message.ToString());
-            return CreatedAtAction("GetAuswertung", message.ToString());
+                return CreatedAtAction("GetAuswertung", new { id = auswertung.Id }, auswertung);
+            }
         }
 
         // DELETE: api/AuswertungsController/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuswertung(int id)
         {
-            if (_auswertungManagementService.HoleAlleAuswertungen() == null)
+            using (var scope = _serviceProvider.CreateScope())
             {
-                return NotFound();
+                var auswertungManagementService = scope.ServiceProvider.GetRequiredService<IAuswertungManagementService>();
+                if (auswertungManagementService.HoleAlleAuswertungen() == null)
+                {
+                    return NotFound();
+                }
+
+                auswertungManagementService.LoescheAuswertung(id);
+
+                return NoContent();
             }
-
-            _auswertungManagementService.LoescheAuswertung(id);
-
-            return NoContent();
+            
         }
     }
 }

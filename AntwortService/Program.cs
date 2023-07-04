@@ -17,10 +17,12 @@ namespace AntwortService
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            string queueServiceUrl = "https://localhost:5001/api/MessageController";
+
             builder.Services.AddDbContext<AntwortContext>(opt =>
                opt.UseInMemoryDatabase("AntwortList"));
-            builder.Services.AddSingleton<UpdateQueue>(new UpdateQueue(queueServiceUrl));
+
+            builder.Services.AddScoped<UpdateQueue>();
+
             builder.Services.AddScoped<AntwortManagementService>();
 
             var app = builder.Build();

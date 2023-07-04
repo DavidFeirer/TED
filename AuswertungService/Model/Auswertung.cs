@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace AuswertungService.Model
+﻿namespace AuswertungService.Model
 {
     public class Auswertung
     {

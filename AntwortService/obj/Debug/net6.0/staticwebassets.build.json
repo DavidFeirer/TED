@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "3NT0ASM/whDdi2AcjwP//oi2tTvrXQClSZsvSzksQkg=",
-  "Source": "QueueService",
-  "BasePath": "_content/QueueService",
+  "Hash": "uyoNRVsgw6B0sPxtGQzEcFnDQjz9YbRHYKwG3KCb2aY=",
+  "Source": "AntwortService",
+  "BasePath": "_content/AntwortService",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
