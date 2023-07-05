@@ -10,8 +10,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntwortService", "AntwortService\AntwortService.csproj", "{17F69AA1-77DB-493A-81B8-8865DD16592F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuswertungService", "AuswertungService\AuswertungService.csproj", "{3BE8A78E-D46B-44EE-BCBC-C096626FC366}"
+<<<<<<< HEAD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fragenevaluierung", "Fragenevaluierung\Fragenevaluierung.csproj", "{0523971C-0C9D-4FB6-B213-B5590FB8A5C3}"
+=======
+>>>>>>> queue_impl3
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

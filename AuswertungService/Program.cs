@@ -1,5 +1,8 @@
 using AuswertungService.Model;
+using AuswertungService.Services;
 using Microsoft.EntityFrameworkCore;
+using AuswertungService.Model;
+using Microsoft.AspNetCore.Hosting;
 
 namespace AuswertungService
 {
@@ -15,13 +18,18 @@ namespace AuswertungService
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+           
             builder.Services.AddDbContext<AuswertungContext>(opt =>
                           opt.UseInMemoryDatabase("AuswertungList"));
+            
+            builder.Services.AddTransient<IAuswertungManagementService, AuswertungManagementService>();
+
+            builder.Services.AddHostedService<QueueListener>();
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            //if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();

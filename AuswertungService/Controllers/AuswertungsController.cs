@@ -1,123 +1,101 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AntwortService.Model;
 using AuswertungService.Model;
+using AuswertungService.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AuswertungService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/AuswertungsController")]
     [ApiController]
     public class AuswertungsController : ControllerBase
     {
-        private readonly AuswertungContext _context;
-
-        public AuswertungsController(AuswertungContext context)
+        private readonly IServiceProvider _serviceProvider;
+        public AuswertungsController(IServiceProvider serviceProvider)
         {
-            _context = context;
+            _serviceProvider = serviceProvider;
         }
 
-        // GET: api/Auswertungs
+        // GET: api/AuswertungsController
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Auswertung>>> GetAuswertungen()
         {
-          if (_context.Auswertungen == null)
-          {
-              return NotFound();
+          using(var scope = _serviceProvider.CreateScope())
+            {
+              var auswertungManagementService = scope.ServiceProvider.GetRequiredService<IAuswertungManagementService>();
+              if (auswertungManagementService.HoleAlleAuswertungen() == null)
+              {
+                  return NotFound();
+              }
+              return auswertungManagementService.HoleAlleAuswertungen();
           }
-            return await _context.Auswertungen.ToListAsync();
         }
-
-        // GET: api/Auswertungs/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Auswertung>> GetAuswertung(int id)
+        
+        [HttpGet("antworten")]
+        public async Task<ActionResult<IEnumerable<String>>> GetAntworten()
         {
-          if (_context.Auswertungen == null)
-          {
-              return NotFound();
-          }
-            var auswertung = await _context.Auswertungen.FindAsync(id);
-
-            if (auswertung == null)
+            using (var scope = _serviceProvider.CreateScope())
             {
-                return NotFound();
-            }
-
-            return auswertung;
-        }
-
-        // PUT: api/Auswertungs/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAuswertung(int id, Auswertung auswertung)
-        {
-            if (id != auswertung.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(auswertung).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AuswertungExists(id))
+                var auswertungManagementService = scope.ServiceProvider.GetRequiredService<IAuswertungManagementService>();
+                if (auswertungManagementService.HoleAlleAntworten() == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                return auswertungManagementService.HoleAlleAntworten();
             }
-
-            return NoContent();
         }
 
-        // POST: api/Auswertungs
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // GET: api/AuswertungsController/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Auswertung>> GetAuswertung(int id)
+        {
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var auswertungManagementService = scope.ServiceProvider.GetRequiredService<IAuswertungManagementService>();
+                if (auswertungManagementService.HoleAlleAuswertungen() == null)
+                {
+                    return NotFound();
+                }
+                var auswertung = auswertungManagementService.HoleAuswertung(id);
+
+                if (auswertung == null)
+                {
+                    return NotFound();
+                }
+
+                return auswertung;
+            }
+        }
+        
+        // POST: api/AuswertungsController
         [HttpPost]
         public async Task<ActionResult<Auswertung>> PostAuswertung(Auswertung auswertung)
         {
-          if (_context.Auswertungen == null)
-          {
-              return Problem("Entity set 'AuswertungContext.Auswertungen'  is null.");
-          }
-            _context.Auswertungen.Add(auswertung);
-            await _context.SaveChangesAsync();
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var auswertungManagementService = scope.ServiceProvider.GetRequiredService<IAuswertungManagementService>();
+                auswertungManagementService.SpeichereAuswertung(auswertung);
 
-            return CreatedAtAction("GetAuswertung", new { id = auswertung.Id }, auswertung);
+                return CreatedAtAction("GetAuswertung", new { id = auswertung.Id }, auswertung);
+            }
         }
 
-        // DELETE: api/Auswertungs/5
+        // DELETE: api/AuswertungsController/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuswertung(int id)
         {
-            if (_context.Auswertungen == null)
+            using (var scope = _serviceProvider.CreateScope())
             {
-                return NotFound();
+                var auswertungManagementService = scope.ServiceProvider.GetRequiredService<IAuswertungManagementService>();
+                if (auswertungManagementService.HoleAlleAuswertungen() == null)
+                {
+                    return NotFound();
+                }
+
+                auswertungManagementService.LoescheAuswertung(id);
+
+                return NoContent();
             }
-            var auswertung = await _context.Auswertungen.FindAsync(id);
-            if (auswertung == null)
-            {
-                return NotFound();
-            }
-
-            _context.Auswertungen.Remove(auswertung);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool AuswertungExists(int id)
-        {
-            return (_context.Auswertungen?.Any(e => e.Id == id)).GetValueOrDefault();
+            
         }
     }
 }
