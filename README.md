@@ -21,3 +21,8 @@
     * ```dotnet run --launch-profile fragenevaluierung-2```
     * ```dotnet run --launch-profile fragenevaluierung-3```
 * Fragenservice starten
+
+### Aufgabe 5
+**Hinweis**  
+Damit der Auswertungsservice über die Queue Einträge vom Antwort Service bekommt muss lokal ein RabbitMQ Server laufen.  
+-> Dazu RabbitMQ Server auf der RabbitMQ Seite runterladen und starten. Ansonsten ist keine weitere Config notwendig.
